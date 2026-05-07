@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Goodbye – HerbalGlow</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --cream: #fdf6ee; --sage: #7a9e7e; --deep-green: #2d5016;
+      --warm-brown: #8b5e3c; --gold: #c9a84c; --light-sage: #d4e6d5;
+    }
+    body {
+      font-family: 'Jost', sans-serif;
+      background: var(--cream); min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden; position: relative;
+    }
+
+    /* ANIMATED BG LEAVES */
+    .bg-leaf {
+      position: fixed; font-size: 2rem; opacity: .1;
+      animation: drift linear infinite;
+      pointer-events: none; user-select: none;
+    }
+    @keyframes drift {
+      0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+      10% { opacity: .15; }
+      90% { opacity: .1; }
+      100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+    }
+
+    .card {
+      background: white; border-radius: 28px; padding: 60px 70px;
+      text-align: center; box-shadow: 0 30px 80px rgba(45,80,22,.12);
+      max-width: 520px; width: 90%;
+      animation: popIn .7s cubic-bezier(.34,1.56,.64,1) both;
+      position: relative; z-index: 10;
+    }
+    @keyframes popIn { 0%{opacity:0;transform:scale(.8)} 100%{opacity:1;transform:scale(1)} }
+
+    .wave-hand { font-size: 5rem; display: block; animation: wave 2s ease-in-out 3; margin-bottom: 24px; }
+    @keyframes wave {
+      0%,60%,100%{transform:rotate(0deg)}
+      20%{transform:rotate(20deg)}
+      40%{transform:rotate(-10deg)}
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif; font-size: 2.4rem;
+      color: var(--deep-green); margin-bottom: 12px; line-height: 1.2;
+    }
+    h1 em { color: var(--gold); font-style: italic; }
+
+    .subtitle {
+      font-size: .95rem; color: #7a7a7a; line-height: 1.75;
+      margin-bottom: 36px; max-width: 360px; margin-inline: auto;
+    }
+
+    .tip-box {
+      background: var(--light-sage); border-radius: 14px;
+      padding: 18px 22px; margin-bottom: 34px;
+      display: flex; align-items: flex-start; gap: 12px; text-align: left;
+    }
+    .tip-icon { font-size: 1.6rem; flex-shrink: 0; }
+    .tip-text { font-size: .84rem; color: var(--deep-green); line-height: 1.6; }
+    .tip-text strong { display: block; font-weight: 700; margin-bottom: 3px; }
+
+    .btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .btn-home {
+      padding: 13px 30px; background: var(--deep-green); color: white;
+      border: none; border-radius: 30px; font-size: .92rem; font-weight: 600;
+      cursor: pointer; font-family: 'Jost',sans-serif; transition: all .3s;
+      text-decoration: none; display: inline-block;
+    }
+    .btn-home:hover { background: var(--warm-brown); transform: translateY(-2px); }
+
+    .btn-login {
+      padding: 13px 30px; background: transparent; color: var(--deep-green);
+      border: 2px solid var(--deep-green); border-radius: 30px; font-size: .92rem; font-weight: 600;
+      cursor: pointer; font-family: 'Jost',sans-serif; transition: all .3s;
+      text-decoration: none; display: inline-block;
+    }
+    .btn-login:hover { background: var(--deep-green); color: white; }
+
+    .timer-bar {
+      width: 100%; height: 4px; background: #e0d8ce;
+      border-radius: 4px; margin-top: 36px; overflow: hidden;
+    }
+    .timer-fill {
+      height: 100%; background: linear-gradient(90deg, var(--sage), var(--gold));
+      border-radius: 4px; width: 100%;
+      animation: shrink 5s linear forwards;
+    }
+    @keyframes shrink { from{width:100%} to{width:0} }
+    .timer-txt { font-size: .78rem; color: #bbb; margin-top: 10px; }
+
+    .bottom-logo {
+      font-family: 'Playfair Display',serif; font-size: 1rem;
+      color: #ccc; margin-top: 28px; display: block;
+    }
+    .bottom-logo span { color: var(--gold); }
+  </style>
+</head>
+<body>
+
+<!-- Floating leaves -->
+<script>
+  const leaves = ['🍃','🌿','🌱','🍀','🌾'];
+  for (let i = 0; i < 18; i++) {
+    const d = document.createElement('div');
+    d.className = 'bg-leaf';
+    d.textContent = leaves[Math.floor(Math.random()*leaves.length)];
+    d.style.left = Math.random()*100 + 'vw';
+    d.style.animationDuration = (8 + Math.random()*12) + 's';
+    d.style.animationDelay = (Math.random()*12) + 's';
+    d.style.fontSize = (1 + Math.random()*2) + 'rem';
+    document.body.appendChild(d);
+  }
+</script>
+
+<div class="card">
+  <span class="wave-hand">👋</span>
+  <h1>You've Signed Out<br><em>Successfully</em></h1>
+  <p class="subtitle">Thank you for being a part of the HerbalGlow family. Your journey to natural beauty continues whenever you're ready.</p>
+
+  <div class="tip-box">
+    <div class="tip-icon">🌿</div>
+    <div class="tip-text">
+      <strong>Today's Herbal Tip</strong>
+      Mix 1 tsp turmeric with honey and rose water for a quick brightening face mask. Apply for 10 minutes and glow naturally!
+    </div>
+  </div>
+
+  <div class="btns">
+    <a href="index.html" class="btn-home">Back to Home 🌸</a>
+    <a href="login.html" class="btn-login">Sign In Again</a>
+  </div>
+
+  <div class="timer-bar"><div class="timer-fill"></div></div>
+  <p class="timer-txt" id="timerTxt">Redirecting to home in 5 seconds...</p>
+
+  <span class="bottom-logo">🌿 Herbal<span>Glow</span></span>
+</div>
+
+<script>
+  let countdown = 5;
+  const txt = document.getElementById('timerTxt');
+  const interval = setInterval(() => {
+    countdown--;
+    txt.textContent = `Redirecting to home in ${countdown} second${countdown===1?'':'s'}...`;
+    if (countdown <= 0) { clearInterval(interval); window.location.href = 'index.html'; }
+  }, 1000);
+</script>
+</body>
+</html>

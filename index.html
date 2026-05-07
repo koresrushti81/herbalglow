@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HerbalGlow – Natural Beauty</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --cream: #fdf6ee;
+      --sage: #7a9e7e;
+      --deep-green: #2d5016;
+      --warm-brown: #8b5e3c;
+      --gold: #c9a84c;
+      --light-sage: #d4e6d5;
+      --text-dark: #1a1a1a;
+      --text-mid: #5a5a5a;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Jost', sans-serif;
+      background: var(--cream);
+      color: var(--text-dark);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 999;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 60px;
+      background: rgba(253,246,238,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(122,158,126,0.2);
+      animation: slideDown .6s ease both;
+    }
+    @keyframes slideDown { from{transform:translateY(-100%);opacity:0} to{transform:translateY(0);opacity:1} }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.7rem; font-weight: 700;
+      color: var(--deep-green);
+      letter-spacing: 1px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .logo span { color: var(--gold); }
+    .logo-leaf { font-size: 1.4rem; }
+
+    .nav-links {
+      display: flex; gap: 36px; list-style: none;
+    }
+    .nav-links a {
+      font-size: .9rem; font-weight: 500; letter-spacing: .05em;
+      text-decoration: none; color: var(--text-mid);
+      position: relative; transition: color .3s;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -3px; left: 0;
+      width: 0; height: 1.5px; background: var(--gold);
+      transition: width .3s;
+    }
+    .nav-links a:hover { color: var(--deep-green); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-cta {
+      display: flex; gap: 12px; align-items: center;
+    }
+    .btn-outline {
+      padding: 9px 22px; border: 1.5px solid var(--sage);
+      border-radius: 30px; font-size: .85rem; font-weight: 500;
+      color: var(--deep-green); background: transparent;
+      cursor: pointer; text-decoration: none;
+      transition: all .3s;
+    }
+    .btn-outline:hover { background: var(--sage); color: #fff; }
+
+    .btn-filled {
+      padding: 9px 22px; border: none;
+      border-radius: 30px; font-size: .85rem; font-weight: 600;
+      background: var(--deep-green); color: var(--cream);
+      cursor: pointer; text-decoration: none;
+      transition: all .3s;
+    }
+    .btn-filled:hover { background: var(--warm-brown); transform: translateY(-1px); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid; grid-template-columns: 1fr 1fr;
+      align-items: center; padding: 100px 60px 60px;
+      position: relative; overflow: hidden;
+    }
+
+    .hero-bg-circle {
+      position: absolute; right: -80px; top: 50%;
+      transform: translateY(-50%);
+      width: 620px; height: 620px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #d4e6d5 0%, #b8d4ba 60%, transparent 100%);
+      z-index: 0;
+      animation: pulse 6s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100%{transform:translateY(-50%) scale(1)} 50%{transform:translateY(-50%) scale(1.04)} }
+
+    .hero-dots {
+      position: absolute; left: 40px; bottom: 80px;
+      display: grid; grid-template-columns: repeat(5,12px); gap: 10px;
+      z-index: 0;
+    }
+    .hero-dots span {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--sage); opacity: .4;
+    }
+
+    .hero-content { position: relative; z-index: 1; }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--light-sage); color: var(--deep-green);
+      padding: 6px 16px; border-radius: 20px;
+      font-size: .78rem; font-weight: 600; letter-spacing: .1em;
+      text-transform: uppercase; margin-bottom: 28px;
+      animation: fadeUp .7s .2s both;
+    }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 4rem; line-height: 1.12;
+      color: var(--deep-green); margin-bottom: 24px;
+      animation: fadeUp .7s .3s both;
+    }
+    .hero-title em { color: var(--gold); font-style: italic; }
+
+    .hero-desc {
+      font-size: 1.05rem; line-height: 1.75;
+      color: var(--text-mid); max-width: 480px;
+      margin-bottom: 40px;
+      animation: fadeUp .7s .4s both;
+    }
+
+    .hero-btns {
+      display: flex; gap: 16px; flex-wrap: wrap;
+      animation: fadeUp .7s .5s both;
+    }
+    .btn-hero {
+      padding: 14px 34px; border-radius: 40px; font-size: .95rem;
+      font-weight: 600; cursor: pointer; text-decoration: none;
+      transition: all .3s; display: inline-block;
+    }
+    .btn-hero-primary {
+      background: var(--deep-green); color: var(--cream);
+      border: none;
+    }
+    .btn-hero-primary:hover { background: var(--warm-brown); transform: translateY(-2px); box-shadow: 0 12px 30px rgba(45,80,22,.25); }
+    .btn-hero-secondary {
+      background: transparent; color: var(--deep-green);
+      border: 2px solid var(--deep-green);
+    }
+    .btn-hero-secondary:hover { background: var(--deep-green); color: #fff; }
+
+    .hero-stats {
+      display: flex; gap: 40px; margin-top: 54px;
+      animation: fadeUp .7s .6s both;
+    }
+    .stat h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem; color: var(--deep-green);
+    }
+    .stat p { font-size: .8rem; color: var(--text-mid); letter-spacing: .05em; }
+
+    .hero-image-wrap {
+      position: relative; z-index: 1;
+      display: flex; justify-content: center; align-items: center;
+      animation: fadeUp .9s .4s both;
+    }
+
+    .hero-img-card {
+      width: 340px; height: 480px;
+      background: linear-gradient(145deg, #e8f4e9, #c2dac3);
+      border-radius: 200px 200px 160px 160px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 9rem;
+      box-shadow: 0 30px 80px rgba(45,80,22,.18);
+      position: relative; overflow: hidden;
+    }
+    .hero-img-card::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(255,255,255,.3) 0%, transparent 60%);
+    }
+
+    .float-card {
+      position: absolute; background: white;
+      border-radius: 14px; padding: 10px 16px;
+      box-shadow: 0 8px 24px rgba(0,0,0,.1);
+      font-size: .78rem; font-weight: 500;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .float-card.one { top: 40px; left: -30px; animation: float1 4s ease-in-out infinite; }
+    .float-card.two { bottom: 80px; right: -30px; animation: float2 5s ease-in-out infinite; }
+    @keyframes float1 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+    @keyframes float2 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(10px)} }
+
+    /* ── MARQUEE ── */
+    .marquee-wrap {
+      background: var(--deep-green); color: var(--cream);
+      padding: 14px 0; overflow: hidden;
+    }
+    .marquee-track {
+      display: flex; gap: 50px; white-space: nowrap;
+      animation: marquee 22s linear infinite;
+    }
+    @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+    .marquee-track span { font-size: .85rem; letter-spacing: .08em; text-transform: uppercase; }
+    .marquee-track .dot { color: var(--gold); font-size: 1.2rem; }
+
+    /* ── CATEGORIES ── */
+    .section { padding: 80px 60px; }
+    .section-label {
+      font-size: .75rem; letter-spacing: .18em; text-transform: uppercase;
+      color: var(--gold); font-weight: 600; margin-bottom: 10px;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.6rem; color: var(--deep-green);
+      margin-bottom: 14px;
+    }
+    .section-sub {
+      color: var(--text-mid); font-size: .95rem; line-height: 1.7;
+      max-width: 500px; margin-bottom: 50px;
+    }
+
+    .cat-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px;
+    }
+    .cat-card {
+      border-radius: 20px; overflow: hidden; cursor: pointer;
+      transition: transform .35s, box-shadow .35s;
+      text-decoration: none;
+    }
+    .cat-card:hover { transform: translateY(-8px); box-shadow: 0 20px 50px rgba(45,80,22,.15); }
+    .cat-img {
+      height: 200px; display: flex; align-items: center; justify-content: center;
+      font-size: 5rem; position: relative;
+    }
+    .cat-card.skin .cat-img { background: linear-gradient(135deg, #fce4d4, #f4b89e); }
+    .cat-card.hair .cat-img { background: linear-gradient(135deg, #d4e6d5, #a8c9aa); }
+    .cat-card.body .cat-img { background: linear-gradient(135deg, #ede8f5, #c9bde8); }
+    .cat-info { padding: 22px; background: white; }
+    .cat-info h3 { font-family: 'Playfair Display',serif; font-size: 1.2rem; color: var(--deep-green); margin-bottom: 6px; }
+    .cat-info p { font-size: .82rem; color: var(--text-mid); line-height: 1.6; margin-bottom: 12px; }
+    .cat-link {
+      font-size: .8rem; font-weight: 600; color: var(--sage);
+      letter-spacing: .06em; text-transform: uppercase;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .cat-link::after { content: '→'; transition: transform .3s; }
+    .cat-card:hover .cat-link::after { transform: translateX(4px); }
+
+    /* ── PRODUCTS ── */
+    .products-section { background: #f6f0e8; }
+    .prod-grid {
+      display: grid; grid-template-columns: repeat(4,1fr); gap: 24px;
+    }
+    .prod-card {
+      background: white; border-radius: 18px; overflow: hidden;
+      transition: transform .3s, box-shadow .3s; cursor: pointer;
+    }
+    .prod-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(0,0,0,.1); }
+    .prod-img {
+      height: 160px; display: flex; align-items: center; justify-content: center;
+      font-size: 4rem; position: relative;
+    }
+    .prod-badge {
+      position: absolute; top: 12px; left: 12px;
+      background: var(--gold); color: white;
+      font-size: .65rem; font-weight: 700; padding: 3px 10px;
+      border-radius: 20px; text-transform: uppercase; letter-spacing: .05em;
+    }
+    .prod-body { padding: 16px; }
+    .prod-cat { font-size: .7rem; color: var(--sage); font-weight: 600; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 4px; }
+    .prod-name { font-family: 'Playfair Display',serif; font-size: 1rem; color: var(--deep-green); margin-bottom: 6px; }
+    .prod-desc { font-size: .78rem; color: var(--text-mid); line-height: 1.5; margin-bottom: 12px; }
+    .prod-footer { display: flex; align-items: center; justify-content: space-between; }
+    .prod-price { font-size: 1.05rem; font-weight: 700; color: var(--warm-brown); }
+    .add-btn {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: var(--deep-green); border: none; color: white;
+      font-size: 1.3rem; cursor: pointer; display: flex;
+      align-items: center; justify-content: center;
+      transition: background .3s, transform .3s;
+    }
+    .add-btn:hover { background: var(--gold); transform: rotate(90deg); }
+
+    /* ── TESTIMONIALS ── */
+    .test-grid {
+      display: grid; grid-template-columns: repeat(3,1fr); gap: 28px;
+    }
+    .test-card {
+      background: white; border-radius: 18px; padding: 28px;
+      border-left: 4px solid var(--sage);
+      transition: transform .3s;
+    }
+    .test-card:hover { transform: translateY(-4px); }
+    .stars { color: var(--gold); font-size: 1.1rem; margin-bottom: 14px; }
+    .test-card p { font-size: .9rem; line-height: 1.75; color: var(--text-mid); margin-bottom: 20px; font-style: italic; }
+    .reviewer { display: flex; align-items: center; gap: 12px; }
+    .avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; background: var(--light-sage);
+    }
+    .reviewer-info h4 { font-size: .9rem; font-weight: 600; color: var(--deep-green); }
+    .reviewer-info span { font-size: .75rem; color: var(--text-mid); }
+
+    /* ── NEWSLETTER ── */
+    .newsletter {
+      background: var(--deep-green); color: white;
+      padding: 80px 60px; text-align: center;
+    }
+    .newsletter h2 {
+      font-family: 'Playfair Display',serif; font-size: 2.4rem;
+      margin-bottom: 14px;
+    }
+    .newsletter p { font-size: .95rem; opacity: .75; margin-bottom: 36px; }
+    .nl-form {
+      display: flex; gap: 12px; max-width: 460px; margin: 0 auto;
+    }
+    .nl-input {
+      flex: 1; padding: 14px 20px; border-radius: 40px;
+      border: none; background: rgba(255,255,255,.12);
+      color: white; font-size: .9rem; outline: none;
+    }
+    .nl-input::placeholder { color: rgba(255,255,255,.5); }
+    .nl-btn {
+      padding: 14px 28px; border-radius: 40px;
+      background: var(--gold); color: white;
+      border: none; font-size: .9rem; font-weight: 600;
+      cursor: pointer; transition: background .3s;
+    }
+    .nl-btn:hover { background: var(--warm-brown); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #1a1a1a; color: rgba(255,255,255,.7);
+      padding: 60px 60px 30px;
+    }
+    .footer-grid {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px;
+      margin-bottom: 40px;
+    }
+    .footer-brand .logo { color: #fff; margin-bottom: 14px; }
+    .footer-brand p { font-size: .85rem; line-height: 1.7; }
+    .footer-col h4 {
+      font-size: .85rem; font-weight: 600; letter-spacing: .1em;
+      text-transform: uppercase; color: white; margin-bottom: 16px;
+    }
+    .footer-col a {
+      display: block; font-size: .83rem; color: rgba(255,255,255,.6);
+      text-decoration: none; margin-bottom: 10px;
+      transition: color .3s;
+    }
+    .footer-col a:hover { color: var(--gold); }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,.1);
+      padding-top: 24px; display: flex;
+      justify-content: space-between; align-items: center;
+      font-size: .78rem; opacity: .55;
+    }
+
+    /* ── SCROLL TO TOP ── */
+    #scrollTop {
+      position: fixed; bottom: 30px; right: 30px;
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--deep-green); color: white;
+      border: none; font-size: 1.2rem; cursor: pointer;
+      opacity: 0; transform: translateY(20px);
+      transition: all .3s; z-index: 999;
+    }
+    #scrollTop.visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo"><span class="logo-leaf">🌿</span> Herbal<span>Glow</span></div>
+  <ul class="nav-links">
+    <li><a href="shop.html">Shop</a></li>
+    <li><a href="shop.html#skincare">Skincare</a></li>
+    <li><a href="shop.html#haircare">Haircare</a></li>
+    <li><a href="shop.html#bodycare">Bodycare</a></li>
+    <li><a href="index.html#about">About</a></li>
+  </ul>
+  <div class="nav-cta">
+    <a href="login.html" class="btn-outline">Login</a>
+    <a href="register.html" class="btn-filled">Sign Up</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-circle"></div>
+  <div class="hero-dots">
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge">🌱 100% Natural & Organic</div>
+    <h1 class="hero-title">Glow Naturally<br>with <em>Herbal</em><br>Wisdom</h1>
+    <p class="hero-desc">Discover pure, plant-powered skincare, haircare & bodycare rituals crafted from nature's finest botanicals. No chemicals, just pure goodness.</p>
+    <div class="hero-btns">
+      <a href="shop.html" class="btn-hero btn-hero-primary">Shop Now</a>
+      <a href="#categories" class="btn-hero btn-hero-secondary">Explore Range</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><h3>200+</h3><p>Products</p></div>
+      <div class="stat"><h3>50K+</h3><p>Happy Customers</p></div>
+      <div class="stat"><h3>100%</h3><p>Organic</p></div>
+    </div>
+  </div>
+  <div class="hero-image-wrap">
+    <div class="hero-img-card">🌺
+      <div class="float-card one">🌿 <span>Aloe Vera Extract</span></div>
+      <div class="float-card two">⭐ 4.9 Rating</div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span>Natural Skincare</span><span class="dot">✦</span>
+    <span>Herbal Haircare</span><span class="dot">✦</span>
+    <span>Pure Body Oils</span><span class="dot">✦</span>
+    <span>Organic Face Masks</span><span class="dot">✦</span>
+    <span>Plant-Based Serums</span><span class="dot">✦</span>
+    <span>Ayurvedic Rituals</span><span class="dot">✦</span>
+    <span>Natural Skincare</span><span class="dot">✦</span>
+    <span>Herbal Haircare</span><span class="dot">✦</span>
+    <span>Pure Body Oils</span><span class="dot">✦</span>
+    <span>Organic Face Masks</span><span class="dot">✦</span>
+    <span>Plant-Based Serums</span><span class="dot">✦</span>
+    <span>Ayurvedic Rituals</span><span class="dot">✦</span>
+  </div>
+</div>
+
+<!-- CATEGORIES -->
+<section class="section" id="categories">
+  <div class="section-label">Our Collections</div>
+  <h2 class="section-title">Shop by Category</h2>
+  <p class="section-sub">Each product is thoughtfully formulated with hand-picked herbs, essential oils and botanical extracts.</p>
+  <div class="cat-grid">
+    <a href="shop.html#skincare" class="cat-card skin">
+      <div class="cat-img">🌸</div>
+      <div class="cat-info">
+        <h3>Skincare</h3>
+        <p>Rose, Turmeric & Aloe-infused creams, serums, and masks for radiant, hydrated skin.</p>
+        <div class="cat-link">Explore Skincare</div>
+      </div>
+    </a>
+    <a href="shop.html#haircare" class="cat-card hair">
+      <div class="cat-img">🌿</div>
+      <div class="cat-info">
+        <h3>Haircare</h3>
+        <p>Bhringraj, Amla & Coconut powered oils and shampoos for strong, lustrous hair.</p>
+        <div class="cat-link">Explore Haircare</div>
+      </div>
+    </a>
+    <a href="shop.html#bodycare" class="cat-card body">
+      <div class="cat-img">🪷</div>
+      <div class="cat-info">
+        <h3>Bodycare</h3>
+        <p>Lavender, Neem & Sandalwood enriched scrubs, butters and bath soaks for silky skin.</p>
+        <div class="cat-link">Explore Bodycare</div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- FEATURED PRODUCTS -->
+<section class="section products-section">
+  <div class="section-label">Bestsellers</div>
+  <h2 class="section-title">Loved by Nature, Loved by You</h2>
+  <p class="section-sub">Our top-rated products that customers keep coming back to.</p>
+  <div class="prod-grid">
+    <div class="prod-card">
+      <div class="prod-img" style="background:linear-gradient(135deg,#fce4d4,#f4b89e)">🌹<span class="prod-badge">Bestseller</span></div>
+      <div class="prod-body">
+        <div class="prod-cat">Skincare</div>
+        <div class="prod-name">Rose Hip Glow Serum</div>
+        <div class="prod-desc">Cold-pressed rosehip oil enriched with Vitamin C for luminous skin.</div>
+        <div class="prod-footer"><span class="prod-price">₹699</span><button class="add-btn">+</button></div>
+      </div>
+    </div>
+    <div class="prod-card">
+      <div class="prod-img" style="background:linear-gradient(135deg,#d4e6d5,#a8c9aa)">🌿<span class="prod-badge">New</span></div>
+      <div class="prod-body">
+        <div class="prod-cat">Haircare</div>
+        <div class="prod-name">Bhringraj Hair Oil</div>
+        <div class="prod-desc">Ancient Ayurvedic formula to reduce hair fall & promote growth.</div>
+        <div class="prod-footer"><span class="prod-price">₹549</span><button class="add-btn">+</button></div>
+      </div>
+    </div>
+    <div class="prod-card">
+      <div class="prod-img" style="background:linear-gradient(135deg,#fff3cd,#ffd980)">🍯</div>
+      <div class="prod-body">
+        <div class="prod-cat">Skincare</div>
+        <div class="prod-name">Honey Turmeric Mask</div>
+        <div class="prod-desc">Raw honey & turmeric brightening mask for an instant glow.</div>
+        <div class="prod-footer"><span class="prod-price">₹399</span><button class="add-btn">+</button></div>
+      </div>
+    </div>
+    <div class="prod-card">
+      <div class="prod-img" style="background:linear-gradient(135deg,#ede8f5,#c9bde8)">🪷<span class="prod-badge">Top Rated</span></div>
+      <div class="prod-body">
+        <div class="prod-cat">Bodycare</div>
+        <div class="prod-name">Lavender Body Butter</div>
+        <div class="prod-desc">Rich shea & cocoa butter whipped with lavender essential oil.</div>
+        <div class="prod-footer"><span class="prod-price">₹479</span><button class="add-btn">+</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section" id="about" style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center">
+  <div style="background:linear-gradient(135deg,#d4e6d5,#e8f4e9);border-radius:24px;height:360px;display:flex;align-items:center;justify-content:center;font-size:8rem">🌱</div>
+  <div>
+    <div class="section-label">Our Story</div>
+    <h2 class="section-title">Rooted in Nature's<br>Ancient Wisdom</h2>
+    <p style="color:var(--text-mid);line-height:1.8;margin-bottom:20px">HerbalGlow was born from a deep belief that the earth provides everything our skin needs. We blend Ayurvedic traditions with modern science to create products that are effective, ethical, and kind to the planet.</p>
+    <p style="color:var(--text-mid);line-height:1.8;margin-bottom:30px">Every ingredient is ethically sourced, every formula is cruelty-free, and every bottle is thoughtfully packaged to minimize our footprint.</p>
+    <div style="display:flex;gap:20px;flex-wrap:wrap">
+      <div style="display:flex;align-items:center;gap:8px;font-size:.85rem;font-weight:600;color:var(--deep-green)">🌿 Cruelty Free</div>
+      <div style="display:flex;align-items:center;gap:8px;font-size:.85rem;font-weight:600;color:var(--deep-green)">♻️ Eco Packaging</div>
+      <div style="display:flex;align-items:center;gap:8px;font-size:.85rem;font-weight:600;color:var(--deep-green)">🌸 Paraben Free</div>
+      <div style="display:flex;align-items:center;gap:8px;font-size:.85rem;font-weight:600;color:var(--deep-green)">✅ Dermatologically Tested</div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section" style="background:#f6f0e8">
+  <div class="section-label">Reviews</div>
+  <h2 class="section-title">What Our Community Says</h2>
+  <p class="section-sub" style="margin-bottom:40px">Real results from real people who made the switch to natural beauty.</p>
+  <div class="test-grid">
+    <div class="test-card">
+      <div class="stars">★★★★★</div>
+      <p>"The Rose Hip Serum completely transformed my skin! I've been using it for 3 months and the difference is remarkable. No more dullness!"</p>
+      <div class="reviewer"><div class="avatar">👩</div><div class="reviewer-info"><h4>Priya S.</h4><span>Mumbai</span></div></div>
+    </div>
+    <div class="test-card">
+      <div class="stars">★★★★★</div>
+      <p>"My hair fall reduced dramatically after using Bhringraj Oil. I love that it's completely natural with no harsh chemicals."</p>
+      <div class="reviewer"><div class="avatar">👱‍♀️</div><div class="reviewer-info"><h4>Ananya R.</h4><span>Bangalore</span></div></div>
+    </div>
+    <div class="test-card">
+      <div class="stars">★★★★☆</div>
+      <p>"The Lavender Body Butter smells divine and my skin has never felt softer. I gift this to everyone I know now!"</p>
+      <div class="reviewer"><div class="avatar">🧕</div><div class="reviewer-info"><h4>Meena K.</h4><span>Chennai</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<div class="newsletter">
+  <h2>Join the Glow Community</h2>
+  <p>Get exclusive offers, new launch alerts and herbal beauty tips delivered to your inbox.</p>
+  <div class="nl-form">
+    <input type="email" class="nl-input" placeholder="Enter your email address">
+    <button class="nl-btn">Subscribe</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo">🌿 Herbal<span>Glow</span></div>
+      <p>Pure, plant-powered beauty rituals inspired by nature's ancient wisdom. Ethical, effective, and kind to the earth.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Shop</h4>
+      <a href="shop.html">All Products</a>
+      <a href="shop.html#skincare">Skincare</a>
+      <a href="shop.html#haircare">Haircare</a>
+      <a href="shop.html#bodycare">Bodycare</a>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a href="#about">About Us</a>
+      <a href="#">Ingredients</a>
+      <a href="#">Sustainability</a>
+      <a href="#">Blog</a>
+    </div>
+    <div class="footer-col">
+      <h4>Account</h4>
+      <a href="login.html">Login</a>
+      <a href="register.html">Register</a>
+      <a href="dashboard.html">My Orders</a>
+      <a href="#">Contact</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 HerbalGlow. All rights reserved.</span>
+    <span>Made with 🌿 & love</span>
+  </div>
+</footer>
+
+<button id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+  window.addEventListener('scroll', () => {
+    document.getElementById('scrollTop').classList.toggle('visible', window.scrollY > 400);
+  });
+
+  // Add to cart notification
+  document.querySelectorAll('.add-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      this.textContent = '✓';
+      this.style.background = 'var(--sage)';
+      setTimeout(() => { this.textContent = '+'; this.style.background = 'var(--deep-green)'; }, 1500);
+    });
+  });
+</script>
+</body>
+</html>

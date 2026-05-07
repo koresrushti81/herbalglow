@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login – HerbalGlow</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --cream: #fdf6ee; --sage: #7a9e7e; --deep-green: #2d5016;
+      --warm-brown: #8b5e3c; --gold: #c9a84c; --light-sage: #d4e6d5;
+      --text-dark: #1a1a1a; --text-mid: #5a5a5a;
+    }
+    body {
+      font-family: 'Jost', sans-serif;
+      background: var(--cream); min-height: 100vh;
+      display: grid; grid-template-columns: 1fr 1fr;
+    }
+
+    /* LEFT PANEL */
+    .left-panel {
+      background: linear-gradient(160deg, #2d5016 0%, #3d6b20 50%, #4a7a28 100%);
+      display: flex; flex-direction: column; justify-content: center;
+      align-items: center; padding: 60px 50px;
+      position: relative; overflow: hidden;
+    }
+    .left-panel::before {
+      content: ''; position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Ccircle cx='30' cy='30' r='20'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .left-orb {
+      position: absolute;
+      border-radius: 50%; background: rgba(255,255,255,.06);
+    }
+    .left-orb.a { width: 300px; height: 300px; top: -80px; right: -80px; }
+    .left-orb.b { width: 200px; height: 200px; bottom: 40px; left: -60px; }
+
+    .brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem; font-weight: 700; color: white;
+      letter-spacing: 1px; margin-bottom: 6px; position: relative;
+      animation: fadeUp .6s both;
+    }
+    .brand span { color: var(--gold); }
+    .brand-tag { font-size: .8rem; color: rgba(255,255,255,.6); letter-spacing: .15em; text-transform: uppercase; margin-bottom: 60px; position: relative; animation: fadeUp .6s .1s both; }
+
+    .panel-emoji { font-size: 7rem; margin-bottom: 30px; animation: float 4s ease-in-out infinite, fadeUp .6s .2s both; position: relative; }
+    @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-14px)} }
+
+    .panel-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem; color: white; text-align: center;
+      margin-bottom: 14px; line-height: 1.3;
+      position: relative; animation: fadeUp .6s .3s both;
+    }
+    .panel-title em { color: var(--gold); font-style: italic; }
+    .panel-desc {
+      font-size: .88rem; color: rgba(255,255,255,.65);
+      text-align: center; line-height: 1.8; max-width: 300px;
+      position: relative; animation: fadeUp .6s .4s both;
+    }
+
+    .benefits {
+      display: flex; flex-direction: column; gap: 14px;
+      margin-top: 40px; position: relative; animation: fadeUp .6s .5s both;
+    }
+    .benefit {
+      display: flex; align-items: center; gap: 12px;
+      font-size: .83rem; color: rgba(255,255,255,.8);
+    }
+    .benefit-icon {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: rgba(255,255,255,.12); display: flex;
+      align-items: center; justify-content: center; font-size: .9rem;
+      flex-shrink: 0;
+    }
+
+    /* RIGHT PANEL */
+    .right-panel {
+      display: flex; flex-direction: column; justify-content: center;
+      align-items: center; padding: 60px 70px;
+      animation: fadeIn .7s both;
+    }
+    @keyframes fadeIn { from{opacity:0;transform:translateX(20px)} to{opacity:1;transform:translateX(0)} }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+
+    .form-header { text-align: center; margin-bottom: 36px; width: 100%; }
+    .form-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem; color: var(--deep-green); margin-bottom: 8px;
+    }
+    .form-header p { font-size: .88rem; color: var(--text-mid); }
+
+    .form-group { width: 100%; margin-bottom: 20px; position: relative; }
+    .form-label {
+      display: block; font-size: .78rem; font-weight: 600;
+      color: var(--deep-green); letter-spacing: .06em;
+      text-transform: uppercase; margin-bottom: 8px;
+    }
+    .form-input {
+      width: 100%; padding: 14px 18px 14px 46px;
+      border: 1.5px solid #e0d8ce; border-radius: 12px;
+      background: #fafaf8; font-size: .92rem; font-family: 'Jost', sans-serif;
+      color: var(--text-dark); outline: none;
+      transition: border-color .3s, box-shadow .3s;
+    }
+    .form-input:focus {
+      border-color: var(--sage);
+      box-shadow: 0 0 0 4px rgba(122,158,126,.12);
+      background: white;
+    }
+    .input-icon {
+      position: absolute; left: 16px; top: 38px;
+      font-size: 1rem; pointer-events: none;
+    }
+    .toggle-password {
+      position: absolute; right: 16px; top: 38px;
+      background: none; border: none; cursor: pointer;
+      font-size: .9rem; color: var(--text-mid);
+    }
+
+    .form-options {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 28px; font-size: .84rem;
+    }
+    .remember { display: flex; align-items: center; gap: 8px; cursor: pointer; color: var(--text-mid); }
+    .remember input { accent-color: var(--sage); }
+    .forgot { color: var(--sage); text-decoration: none; font-weight: 500; }
+    .forgot:hover { color: var(--deep-green); text-decoration: underline; }
+
+    .btn-login {
+      width: 100%; padding: 15px;
+      background: var(--deep-green); color: white;
+      border: none; border-radius: 12px; font-size: .96rem;
+      font-weight: 600; font-family: 'Jost', sans-serif;
+      cursor: pointer; transition: all .3s; margin-bottom: 20px;
+      position: relative; overflow: hidden;
+    }
+    .btn-login::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.15), transparent);
+      transform: translateX(-100%); transition: transform .4s;
+    }
+    .btn-login:hover { background: var(--warm-brown); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(45,80,22,.25); }
+    .btn-login:hover::after { transform: translateX(100%); }
+
+    .divider {
+      display: flex; align-items: center; gap: 14px;
+      color: #c0b8ae; font-size: .8rem; margin-bottom: 20px;
+    }
+    .divider::before, .divider::after {
+      content: ''; flex: 1; height: 1px; background: #e0d8ce;
+    }
+
+    .social-btns { display: flex; gap: 12px; width: 100%; margin-bottom: 28px; }
+    .social-btn {
+      flex: 1; padding: 12px; border: 1.5px solid #e0d8ce;
+      border-radius: 10px; background: white; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      font-size: .85rem; font-family: 'Jost', sans-serif; color: var(--text-dark);
+      transition: all .3s; font-weight: 500;
+    }
+    .social-btn:hover { border-color: var(--sage); background: var(--light-sage); }
+
+    .register-link {
+      text-align: center; font-size: .86rem; color: var(--text-mid);
+    }
+    .register-link a { color: var(--deep-green); font-weight: 600; text-decoration: none; }
+    .register-link a:hover { text-decoration: underline; }
+
+    /* ERROR */
+    .error-msg {
+      background: #fef2f2; border: 1px solid #fca5a5;
+      color: #dc2626; font-size: .82rem; padding: 10px 14px;
+      border-radius: 8px; margin-bottom: 16px; display: none;
+    }
+
+    /* SUCCESS */
+    .success-overlay {
+      position: fixed; inset: 0; background: rgba(45,80,22,.95);
+      display: none; align-items: center; justify-content: center;
+      z-index: 999; flex-direction: column; gap: 16px;
+    }
+    .success-overlay.show { display: flex; animation: fadeInFull .4s; }
+    @keyframes fadeInFull { from{opacity:0} to{opacity:1} }
+    .success-icon { font-size: 5rem; animation: bounceIn .5s .2s both; }
+    @keyframes bounceIn { 0%{transform:scale(0)} 70%{transform:scale(1.2)} 100%{transform:scale(1)} }
+    .success-overlay h2 { font-family:'Playfair Display',serif; font-size: 2rem; color: white; }
+    .success-overlay p { color: rgba(255,255,255,.7); font-size: .9rem; }
+
+    /* NAV TOP */
+    .top-bar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 16px 40px; display: flex; justify-content: space-between; align-items: center;
+      background: rgba(253,246,238,.85); backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(122,158,126,.15);
+    }
+    .top-logo {
+      font-family: 'Playfair Display',serif; font-size: 1.4rem; font-weight: 700;
+      color: var(--deep-green); text-decoration: none;
+    }
+    .top-logo span { color: var(--gold); }
+    .back-link {
+      font-size: .85rem; color: var(--text-mid); text-decoration: none;
+      display: flex; align-items: center; gap: 6px;
+      transition: color .3s;
+    }
+    .back-link:hover { color: var(--deep-green); }
+  </style>
+</head>
+<body>
+
+<div class="top-bar">
+  <a href="index.html" class="top-logo">🌿 Herbal<span>Glow</span></a>
+  <a href="index.html" class="back-link">← Back to Home</a>
+</div>
+
+<!-- LEFT -->
+<div class="left-panel">
+  <div class="left-orb a"></div>
+  <div class="left-orb b"></div>
+  <a href="index.html" class="brand">🌿 Herbal<span>Glow</span></a>
+  <div class="brand-tag">Pure Natural Beauty</div>
+  <div class="panel-emoji">🌺</div>
+  <h2 class="panel-title">Welcome <em>Back,</em><br>Beauty Lover!</h2>
+  <p class="panel-desc">Sign in to access your personalized beauty journey, past orders & exclusive member deals.</p>
+  <div class="benefits">
+    <div class="benefit"><div class="benefit-icon">🌿</div>Access exclusive herbal beauty tips</div>
+    <div class="benefit"><div class="benefit-icon">📦</div>Track your orders in real-time</div>
+    <div class="benefit"><div class="benefit-icon">⭐</div>Earn rewards on every purchase</div>
+    <div class="benefit"><div class="benefit-icon">🎁</div>Member-only discounts & offers</div>
+  </div>
+</div>
+
+<!-- RIGHT -->
+<div class="right-panel">
+  <div class="form-header">
+    <h2>Sign In</h2>
+    <p>Enter your details to continue your glow journey</p>
+  </div>
+
+  <div class="error-msg" id="errorMsg">⚠️ Invalid email or password. Please try again.</div>
+
+  <div class="form-group">
+    <label class="form-label">Email Address</label>
+    <span class="input-icon">📧</span>
+    <input type="email" class="form-input" id="email" placeholder="you@example.com" autocomplete="email">
+  </div>
+
+  <div class="form-group">
+    <label class="form-label">Password</label>
+    <span class="input-icon">🔒</span>
+    <input type="password" class="form-input" id="password" placeholder="Enter your password">
+    <button class="toggle-password" type="button" onclick="togglePass()">👁</button>
+  </div>
+
+  <div class="form-options">
+    <label class="remember">
+      <input type="checkbox" id="rememberMe"> Remember me
+    </label>
+    <a href="#" class="forgot">Forgot Password?</a>
+  </div>
+
+  <button class="btn-login" onclick="handleLogin()">Sign In to HerbalGlow</button>
+
+  <div class="divider">or continue with</div>
+
+  <div class="social-btns">
+    <button class="social-btn">🌐 Google</button>
+    <button class="social-btn">📘 Facebook</button>
+  </div>
+
+  <div class="register-link">
+    New to HerbalGlow? <a href="register.html">Create an Account</a>
+  </div>
+</div>
+
+<!-- SUCCESS OVERLAY -->
+<div class="success-overlay" id="successOverlay">
+  <div class="success-icon">🌿</div>
+  <h2>Welcome Back!</h2>
+  <p>Redirecting to your dashboard...</p>
+</div>
+
+<script>
+  function togglePass() {
+    const p = document.getElementById('password');
+    p.type = p.type === 'password' ? 'text' : 'password';
+  }
+
+  function handleLogin() {
+    const email = document.getElementById('email').value.trim();
+    const pass = document.getElementById('password').value.trim();
+    const err = document.getElementById('errorMsg');
+
+    if (!email || !pass) {
+      err.textContent = '⚠️ Please fill in all fields.';
+      err.style.display = 'block'; return;
+    }
+    if (!email.includes('@')) {
+      err.textContent = '⚠️ Please enter a valid email.';
+      err.style.display = 'block'; return;
+    }
+    if (pass.length < 4) {
+      err.textContent = '⚠️ Password too short.';
+      err.style.display = 'block'; return;
+    }
+
+    err.style.display = 'none';
+
+    // Save session
+    const username = email.split('@')[0];
+    localStorage.setItem('hg_user', JSON.stringify({ email, name: username }));
+    localStorage.setItem('hg_logged_in', 'true');
+
+    document.getElementById('successOverlay').classList.add('show');
+    setTimeout(() => window.location.href = 'dashboard.html', 2000);
+  }
+
+  // If already logged in
+  if (localStorage.getItem('hg_logged_in') === 'true') {
+    window.location.href = 'dashboard.html';
+  }
+
+  document.getElementById('password').addEventListener('keydown', e => {
+    if (e.key === 'Enter') handleLogin();
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shop – HerbalGlow</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --cream: #fdf6ee; --sage: #7a9e7e; --deep-green: #2d5016;
+      --warm-brown: #8b5e3c; --gold: #c9a84c; --light-sage: #d4e6d5;
+      --text-dark: #1a1a1a; --text-mid: #5a5a5a;
+    }
+    body { font-family: 'Jost', sans-serif; background: var(--cream); color: var(--text-dark); }
+
+    nav {
+      position: sticky; top: 0; z-index: 999;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 50px; background: rgba(253,246,238,.9);
+      backdrop-filter: blur(14px); border-bottom: 1px solid rgba(122,158,126,.2);
+    }
+    .logo { font-family: 'Playfair Display',serif; font-size: 1.6rem; font-weight: 700; color: var(--deep-green); text-decoration: none; }
+    .logo span { color: var(--gold); }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a { font-size: .87rem; font-weight: 500; color: var(--text-mid); text-decoration: none; transition: color .3s; }
+    .nav-links a:hover { color: var(--deep-green); }
+    .nav-right { display: flex; align-items: center; gap: 14px; }
+    .cart-btn {
+      display: flex; align-items: center; gap: 6px;
+      padding: 8px 18px; background: var(--deep-green); color: white;
+      border: none; border-radius: 24px; font-size: .84rem; font-weight: 600;
+      cursor: pointer; transition: background .3s; font-family: 'Jost', sans-serif;
+    }
+    .cart-btn:hover { background: var(--warm-brown); }
+    .cart-count {
+      background: var(--gold); color: white; font-size: .7rem;
+      font-weight: 700; padding: 2px 7px; border-radius: 12px;
+    }
+    .user-pill {
+      display: flex; align-items: center; gap: 8px;
+      padding: 7px 16px; border: 1.5px solid var(--sage);
+      border-radius: 24px; font-size: .83rem; color: var(--deep-green); font-weight: 500;
+      text-decoration: none; transition: all .3s;
+    }
+    .user-pill:hover { background: var(--light-sage); }
+
+    /* HERO BANNER */
+    .shop-hero {
+      background: linear-gradient(135deg, #2d5016, #4a7a28);
+      color: white; padding: 60px 50px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .shop-hero h1 { font-family: 'Playfair Display',serif; font-size: 2.8rem; margin-bottom: 12px; }
+    .shop-hero h1 em { color: var(--gold); font-style: italic; }
+    .shop-hero p { font-size: .95rem; opacity: .75; max-width: 420px; }
+    .shop-hero-emoji { font-size: 7rem; }
+
+    /* FILTERS */
+    .filter-bar {
+      display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+      padding: 22px 50px; background: white;
+      border-bottom: 1px solid #ede5da;
+    }
+    .filter-label { font-size: .78rem; font-weight: 600; color: var(--text-mid); text-transform: uppercase; letter-spacing: .08em; }
+    .filter-tags { display: flex; gap: 8px; flex-wrap: wrap; flex: 1; }
+    .tag {
+      padding: 7px 18px; border-radius: 24px; font-size: .82rem; font-weight: 500;
+      cursor: pointer; border: 1.5px solid #e0d8ce; background: white; color: var(--text-mid);
+      transition: all .25s; white-space: nowrap;
+    }
+    .tag.active, .tag:hover { background: var(--deep-green); color: white; border-color: var(--deep-green); }
+    .search-bar {
+      display: flex; align-items: center; gap: 8px;
+      border: 1.5px solid #e0d8ce; border-radius: 24px;
+      padding: 8px 16px; background: #fafaf8;
+    }
+    .search-bar input {
+      border: none; background: transparent; font-family: 'Jost',sans-serif;
+      font-size: .85rem; outline: none; width: 160px; color: var(--text-dark);
+    }
+
+    /* MAIN LAYOUT */
+    .shop-main { display: grid; grid-template-columns: 240px 1fr; gap: 0; }
+
+    /* SIDEBAR */
+    .sidebar {
+      background: white; border-right: 1px solid #ede5da;
+      padding: 32px 24px; position: sticky; top: 70px;
+      height: calc(100vh - 70px); overflow-y: auto;
+    }
+    .sidebar-section { margin-bottom: 28px; }
+    .sidebar-title { font-size: .75rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--deep-green); margin-bottom: 14px; }
+    .sidebar-option { display: flex; align-items: center; gap: 10px; padding: 8px 0; cursor: pointer; font-size: .85rem; color: var(--text-mid); }
+    .sidebar-option input { accent-color: var(--sage); }
+    .price-range { display: flex; flex-direction: column; gap: 10px; }
+    .price-range input[type=range] { width: 100%; accent-color: var(--sage); }
+    .price-display { font-size: .82rem; color: var(--text-mid); }
+
+    /* PRODUCTS GRID */
+    .products-area { padding: 32px 40px; }
+    .products-top {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 28px;
+    }
+    .products-top span { font-size: .88rem; color: var(--text-mid); }
+    .sort-select {
+      padding: 8px 14px; border: 1.5px solid #e0d8ce; border-radius: 8px;
+      font-family: 'Jost',sans-serif; font-size: .84rem; color: var(--text-dark);
+      background: white; cursor: pointer; outline: none;
+    }
+
+    .prod-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+
+    .prod-card {
+      background: white; border-radius: 18px; overflow: hidden;
+      transition: transform .3s, box-shadow .3s; cursor: pointer;
+      border: 1px solid #f0e8de;
+    }
+    .prod-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(0,0,0,.1); }
+    .prod-img {
+      height: 160px; display: flex; align-items: center; justify-content: center;
+      font-size: 3.5rem; position: relative;
+    }
+    .prod-badge {
+      position: absolute; top: 12px; left: 12px;
+      background: var(--gold); color: white;
+      font-size: .62rem; font-weight: 700; padding: 3px 10px;
+      border-radius: 20px; text-transform: uppercase; letter-spacing: .05em;
+    }
+    .prod-badge.new-badge { background: var(--sage); }
+    .prod-badge.sale { background: #ef4444; }
+    .wishlist-btn {
+      position: absolute; top: 10px; right: 10px;
+      background: white; border: none; font-size: 1rem;
+      width: 32px; height: 32px; border-radius: 50%; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,.1); transition: transform .2s;
+    }
+    .wishlist-btn:hover { transform: scale(1.15); }
+    .prod-body { padding: 16px; }
+    .prod-cat { font-size: .68rem; color: var(--sage); font-weight: 600; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 4px; }
+    .prod-name { font-family: 'Playfair Display',serif; font-size: .98rem; color: var(--deep-green); margin-bottom: 6px; line-height: 1.3; }
+    .prod-desc { font-size: .76rem; color: var(--text-mid); line-height: 1.5; margin-bottom: 12px; }
+    .stars { font-size: .75rem; color: var(--gold); margin-bottom: 10px; }
+    .prod-footer { display: flex; align-items: center; justify-content: space-between; }
+    .prod-price { font-size: 1.05rem; font-weight: 700; color: var(--warm-brown); }
+    .prod-price .old { font-size: .8rem; color: #bbb; text-decoration: line-through; font-weight: 400; margin-right: 4px; }
+    .add-btn {
+      padding: 8px 16px; background: var(--deep-green); color: white;
+      border: none; border-radius: 20px; font-size: .78rem; font-weight: 600;
+      cursor: pointer; font-family: 'Jost',sans-serif; transition: all .3s;
+    }
+    .add-btn:hover { background: var(--gold); }
+
+    /* CART DRAWER */
+    .cart-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,.4);
+      z-index: 1000; display: none; opacity: 0; transition: opacity .3s;
+    }
+    .cart-overlay.open { display: block; opacity: 1; }
+    .cart-drawer {
+      position: fixed; top: 0; right: -420px; bottom: 0; width: 400px;
+      background: white; z-index: 1001; box-shadow: -8px 0 30px rgba(0,0,0,.15);
+      transition: right .35s cubic-bezier(.4,0,.2,1);
+      display: flex; flex-direction: column;
+    }
+    .cart-drawer.open { right: 0; }
+    .cart-header {
+      padding: 24px; border-bottom: 1px solid #ede5da;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .cart-header h3 { font-family: 'Playfair Display',serif; font-size: 1.3rem; color: var(--deep-green); }
+    .close-cart { background: none; border: none; font-size: 1.4rem; cursor: pointer; color: var(--text-mid); }
+    .cart-items { flex: 1; overflow-y: auto; padding: 20px; }
+    .cart-item { display: flex; gap: 14px; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0e8de; }
+    .cart-item-img { width: 60px; height: 60px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 2rem; background: var(--light-sage); flex-shrink: 0; }
+    .cart-item-info { flex: 1; }
+    .cart-item-info h4 { font-size: .88rem; font-weight: 600; color: var(--deep-green); margin-bottom: 4px; }
+    .cart-item-info p { font-size: .78rem; color: var(--text-mid); }
+    .cart-item-price { font-weight: 700; color: var(--warm-brown); font-size: .92rem; }
+    .remove-item { background: none; border: none; color: #ccc; cursor: pointer; font-size: .9rem; }
+    .remove-item:hover { color: #ef4444; }
+    .cart-empty { text-align: center; padding: 60px 20px; }
+    .cart-empty-icon { font-size: 4rem; margin-bottom: 16px; display: block; }
+    .cart-empty p { color: var(--text-mid); font-size: .9rem; }
+    .cart-footer { padding: 20px 24px; border-top: 1px solid #ede5da; }
+    .cart-total { display: flex; justify-content: space-between; font-size: 1rem; font-weight: 700; color: var(--deep-green); margin-bottom: 16px; }
+    .checkout-btn {
+      width: 100%; padding: 14px; background: var(--deep-green); color: white;
+      border: none; border-radius: 12px; font-size: .95rem; font-weight: 600;
+      font-family: 'Jost',sans-serif; cursor: pointer; transition: background .3s;
+    }
+    .checkout-btn:hover { background: var(--warm-brown); }
+
+    /* TOAST */
+    .toast {
+      position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(80px);
+      background: var(--deep-green); color: white; padding: 12px 24px;
+      border-radius: 30px; font-size: .88rem; font-weight: 500;
+      z-index: 2000; transition: transform .35s;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    /* HIDDEN */
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="logo">🌿 Herbal<span>Glow</span></a>
+  <ul class="nav-links">
+    <li><a href="#skincare">Skincare</a></li>
+    <li><a href="#haircare">Haircare</a></li>
+    <li><a href="#bodycare">Bodycare</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="cart-btn" onclick="toggleCart()">🛒 Cart <span class="cart-count" id="cartCount">0</span></button>
+    <a href="dashboard.html" class="user-pill" id="userPill">👤 Account</a>
+  </div>
+</nav>
+
+<!-- HERO BANNER -->
+<div class="shop-hero">
+  <div>
+    <h1>Shop <em>Natural</em> Beauty</h1>
+    <p>Explore 200+ hand-crafted herbal products for skin, hair, and body. Ethically sourced, cruelty-free.</p>
+  </div>
+  <div class="shop-hero-emoji">🌸</div>
+</div>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <span class="filter-label">Filter:</span>
+  <div class="filter-tags">
+    <div class="tag active" onclick="filterProducts('all', this)">All Products</div>
+    <div class="tag" onclick="filterProducts('skincare', this)" id="tab-skincare">Skincare 🌸</div>
+    <div class="tag" onclick="filterProducts('haircare', this)" id="tab-haircare">Haircare 🌿</div>
+    <div class="tag" onclick="filterProducts('bodycare', this)" id="tab-bodycare">Bodycare 🪷</div>
+    <div class="tag" onclick="filterProducts('bestseller', this)">⭐ Bestsellers</div>
+    <div class="tag" onclick="filterProducts('sale', this)">🔥 On Sale</div>
+  </div>
+  <div class="search-bar">
+    🔍 <input type="text" placeholder="Search products..." oninput="searchProducts(this.value)">
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="shop-main">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-title">Categories</div>
+      <div class="sidebar-option"><input type="checkbox" checked onchange="filterCheck()"> All</div>
+      <div class="sidebar-option"><input type="checkbox" onchange="filterCheck()"> Serums</div>
+      <div class="sidebar-option"><input type="checkbox" onchange="filterCheck()"> Masks</div>
+      <div class="sidebar-option"><input type="checkbox" onchange="filterCheck()"> Oils</div>
+      <div class="sidebar-option"><input type="checkbox" onchange="filterCheck()"> Scrubs</div>
+      <div class="sidebar-option"><input type="checkbox" onchange="filterCheck()"> Moisturisers</div>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-title">Price Range</div>
+      <div class="price-range">
+        <input type="range" min="100" max="2000" value="2000" oninput="updatePrice(this.value)">
+        <div class="price-display">Up to ₹<span id="priceVal">2000</span></div>
+      </div>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-title">Skin Type</div>
+      <div class="sidebar-option"><input type="checkbox"> Dry</div>
+      <div class="sidebar-option"><input type="checkbox"> Oily</div>
+      <div class="sidebar-option"><input type="checkbox"> Combination</div>
+      <div class="sidebar-option"><input type="checkbox"> Sensitive</div>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-title">Ingredients</div>
+      <div class="sidebar-option"><input type="checkbox"> Aloe Vera</div>
+      <div class="sidebar-option"><input type="checkbox"> Rosehip</div>
+      <div class="sidebar-option"><input type="checkbox"> Turmeric</div>
+      <div class="sidebar-option"><input type="checkbox"> Neem</div>
+      <div class="sidebar-option"><input type="checkbox"> Bhringraj</div>
+    </div>
+  </aside>
+
+  <!-- PRODUCTS -->
+  <div class="products-area">
+    <div class="products-top">
+      <span id="productCount">Showing all 16 products</span>
+      <select class="sort-select" onchange="sortProducts(this.value)">
+        <option value="default">Sort: Featured</option>
+        <option value="low">Price: Low to High</option>
+        <option value="high">Price: High to Low</option>
+        <option value="rating">Best Rated</option>
+      </select>
+    </div>
+
+    <div class="prod-grid" id="prodGrid">
+      <!-- Products injected by JS -->
+    </div>
+  </div>
+</div>
+
+<!-- CART DRAWER -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-header">
+    <h3>🛒 Your Cart</h3>
+    <button class="close-cart" onclick="toggleCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty">
+      <span class="cart-empty-icon">🛒</span>
+      <p>Your cart is empty.<br>Start adding some herbal goodness!</p>
+    </div>
+  </div>
+  <div class="cart-footer" id="cartFooter" style="display:none">
+    <div class="cart-total"><span>Total</span><span id="cartTotal">₹0</span></div>
+    <button class="checkout-btn" onclick="checkout()">Proceed to Checkout →</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+  const allProducts = [
+    { id:1, name:'Rose Hip Glow Serum', cat:'skincare', emoji:'🌹', desc:'Cold-pressed rosehip with Vitamin C', price:699, old:null, rating:4.9, badge:'Bestseller', bg:'linear-gradient(135deg,#fce4d4,#f4b89e)' },
+    { id:2, name:'Kumkumadi Face Oil', cat:'skincare', emoji:'🌸', desc:'Saffron & sandalwood brightening oil', price:849, old:1100, rating:4.8, badge:'Sale', bg:'linear-gradient(135deg,#fce4d4,#f4b89e)' },
+    { id:3, name:'Honey Turmeric Mask', cat:'skincare', emoji:'🍯', desc:'Raw honey & turmeric brightening mask', price:399, old:null, rating:4.7, badge:null, bg:'linear-gradient(135deg,#fff3cd,#ffd980)' },
+    { id:4, name:'Aloe Neem Face Wash', cat:'skincare', emoji:'🌿', desc:'Purifying cleanser for clear skin', price:299, old:null, rating:4.6, badge:'New', bg:'linear-gradient(135deg,#d4e6d5,#a8c9aa)' },
+    { id:5, name:'Retinol Rose Night Cream', cat:'skincare', emoji:'🌹', desc:'Overnight repair with rose & retinol', price:749, old:null, rating:4.8, badge:null, bg:'linear-gradient(135deg,#fce4d4,#f4b89e)' },
+    { id:6, name:'Vitamin C Brightening Toner', cat:'skincare', emoji:'🍊', desc:'Citrus-infused pore-tightening toner', price:349, old:499, rating:4.5, badge:'Sale', bg:'linear-gradient(135deg,#fff3cd,#ffd980)' },
+    { id:7, name:'Bhringraj Hair Oil', cat:'haircare', emoji:'🌿', desc:'Reduces hair fall, promotes growth', price:549, old:null, rating:4.9, badge:'Bestseller', bg:'linear-gradient(135deg,#d4e6d5,#a8c9aa)' },
+    { id:8, name:'Amla Shikakai Shampoo', cat:'haircare', emoji:'🍃', desc:'Strengthens & nourishes every strand', price:399, old:null, rating:4.7, badge:'New', bg:'linear-gradient(135deg,#d4e6d5,#a8c9aa)' },
+    { id:9, name:'Brahmi Deep Conditioner', cat:'haircare', emoji:'🌱', desc:'Intense repair for dry damaged hair', price:449, old:599, rating:4.6, badge:'Sale', bg:'linear-gradient(135deg,#d4e6d5,#a8c9aa)' },
+    { id:10, name:'Onion Scalp Serum', cat:'haircare', emoji:'🧅', desc:'Clinically tested anti-hairfall formula', price:599, old:null, rating:4.8, badge:null, bg:'linear-gradient(135deg,#fff3cd,#ffd980)' },
+    { id:11, name:'Lavender Body Butter', cat:'bodycare', emoji:'🪷', desc:'Rich shea & lavender whipped butter', price:479, old:null, rating:4.8, badge:'Top Rated', bg:'linear-gradient(135deg,#ede8f5,#c9bde8)' },
+    { id:12, name:'Coffee Sugar Scrub', cat:'bodycare', emoji:'☕', desc:'Exfoliating & energising body scrub', price:349, old:null, rating:4.6, badge:null, bg:'linear-gradient(135deg,#c8a882,#a0714f)' },
+    { id:13, name:'Neem Teatree Body Wash', cat:'bodycare', emoji:'🌿', desc:'Antibacterial gentle daily cleanse', price:299, old:null, rating:4.5, badge:'New', bg:'linear-gradient(135deg,#d4e6d5,#a8c9aa)' },
+    { id:14, name:'Rose Sandalwood Lotion', cat:'bodycare', emoji:'🌹', desc:'24-hour hydration for silky skin', price:449, old:599, rating:4.7, badge:'Sale', bg:'linear-gradient(135deg,#fce4d4,#f4b89e)' },
+    { id:15, name:'Patchouli Bath Salts', cat:'bodycare', emoji:'🛁', desc:'Relaxing mineral bath soak blend', price:329, old:null, rating:4.6, badge:null, bg:'linear-gradient(135deg,#ede8f5,#c9bde8)' },
+    { id:16, name:'Charcoal Detox Mask', cat:'skincare', emoji:'🖤', desc:'Deep pore cleansing activated charcoal', price:429, old:null, rating:4.7, badge:null, bg:'linear-gradient(135deg,#444,#888)' },
+  ];
+
+  let cart = JSON.parse(localStorage.getItem('hg_cart') || '[]');
+  let filtered = [...allProducts];
+
+  function renderProducts(list) {
+    const grid = document.getElementById('prodGrid');
+    document.getElementById('productCount').textContent = `Showing ${list.length} product${list.length===1?'':'s'}`;
+    if (!list.length) { grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px;color:var(--text-mid)">🌿 No products found. Try a different filter.</div>'; return; }
+    grid.innerHTML = list.map(p => `
+      <div class="prod-card" data-id="${p.id}">
+        <div class="prod-img" style="background:${p.bg}">
+          ${p.emoji}
+          ${p.badge ? `<span class="prod-badge ${p.badge==='New'?'new-badge':p.badge==='Sale'?'sale':''}">${p.badge}</span>` : ''}
+          <button class="wishlist-btn" onclick="toggleWish(this)" title="Wishlist">🤍</button>
+        </div>
+        <div class="prod-body">
+          <div class="prod-cat">${p.cat}</div>
+          <div class="prod-name">${p.name}</div>
+          <div class="prod-desc">${p.desc}</div>
+          <div class="stars">${'★'.repeat(Math.round(p.rating))}${'☆'.repeat(5-Math.round(p.rating))} ${p.rating}</div>
+          <div class="prod-footer">
+            <div class="prod-price">
+              ${p.old ? `<span class="old">₹${p.old}</span>` : ''} ₹${p.price}
+            </div>
+            <button class="add-btn" onclick="addToCart(${p.id})">Add +</button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function filterProducts(cat, el) {
+    document.querySelectorAll('.tag').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    if (cat === 'all') filtered = [...allProducts];
+    else if (cat === 'bestseller') filtered = allProducts.filter(p => p.badge === 'Bestseller');
+    else if (cat === 'sale') filtered = allProducts.filter(p => p.badge === 'Sale');
+    else filtered = allProducts.filter(p => p.cat === cat);
+    renderProducts(filtered);
+  }
+
+  function searchProducts(q) {
+    const lq = q.toLowerCase();
+    const res = allProducts.filter(p => p.name.toLowerCase().includes(lq) || p.desc.toLowerCase().includes(lq) || p.cat.toLowerCase().includes(lq));
+    renderProducts(res);
+  }
+
+  function sortProducts(val) {
+    let sorted = [...filtered];
+    if (val === 'low') sorted.sort((a,b) => a.price - b.price);
+    else if (val === 'high') sorted.sort((a,b) => b.price - a.price);
+    else if (val === 'rating') sorted.sort((a,b) => b.rating - a.rating);
+    renderProducts(sorted);
+  }
+
+  function updatePrice(v) { document.getElementById('priceVal').textContent = v; }
+  function filterCheck() {}
+
+  function addToCart(id) {
+    const p = allProducts.find(x => x.id === id);
+    const existing = cart.find(x => x.id === id);
+    if (existing) existing.qty++;
+    else cart.push({ ...p, qty: 1 });
+    localStorage.setItem('hg_cart', JSON.stringify(cart));
+    updateCartCount();
+    showToast(`✅ ${p.name} added to cart!`);
+    renderCart();
+  }
+
+  function removeFromCart(id) {
+    cart = cart.filter(x => x.id !== id);
+    localStorage.setItem('hg_cart', JSON.stringify(cart));
+    updateCartCount();
+    renderCart();
+  }
+
+  function updateCartCount() {
+    const total = cart.reduce((a,x) => a + x.qty, 0);
+    document.getElementById('cartCount').textContent = total;
+  }
+
+  function renderCart() {
+    const el = document.getElementById('cartItems');
+    const footer = document.getElementById('cartFooter');
+    if (!cart.length) {
+      el.innerHTML = `<div class="cart-empty"><span class="cart-empty-icon">🛒</span><p>Your cart is empty.<br>Start adding some herbal goodness!</p></div>`;
+      footer.style.display = 'none'; return;
+    }
+    el.innerHTML = cart.map(item => `
+      <div class="cart-item">
+        <div class="cart-item-img" style="background:${item.bg}">${item.emoji}</div>
+        <div class="cart-item-info">
+          <h4>${item.name}</h4>
+          <p>Qty: ${item.qty} × ₹${item.price}</p>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+          <span class="cart-item-price">₹${item.price * item.qty}</span>
+          <button class="remove-item" onclick="removeFromCart(${item.id})">✕</button>
+        </div>
+      </div>
+    `).join('');
+    const total = cart.reduce((a,x) => a + x.price * x.qty, 0);
+    document.getElementById('cartTotal').textContent = `₹${total}`;
+    footer.style.display = 'block';
+  }
+
+  function toggleCart() {
+    document.getElementById('cartOverlay').classList.toggle('open');
+    document.getElementById('cartDrawer').classList.toggle('open');
+    renderCart();
+  }
+
+  function toggleWish(btn) {
+    btn.textContent = btn.textContent === '🤍' ? '❤️' : '🤍';
+  }
+
+  function checkout() {
+    if (!localStorage.getItem('hg_logged_in')) {
+      showToast('Please login to checkout!');
+      setTimeout(() => window.location.href = 'login.html', 1500);
+      return;
+    }
+    window.location.href = 'dashboard.html';
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg; t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2500);
+  }
+
+  // Check if URL has hash and filter
+  window.addEventListener('load', () => {
+    const hash = window.location.hash.replace('#', '');
+    if (hash) {
+      const el = document.getElementById(`tab-${hash}`);
+      if (el) filterProducts(hash, el);
+    }
+    updateCartCount();
+    renderProducts(allProducts);
+
+    const user = JSON.parse(localStorage.getItem('hg_user') || 'null');
+    if (user) document.getElementById('userPill').textContent = `👤 ${user.name.split(' ')[0]}`;
+  });
+</script>
+</body>
+</html>
